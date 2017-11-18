@@ -24,7 +24,7 @@ ms.lasthandoff: 10/11/2017
 ---
 # <a name="manage-azure-disks-with-the-azure-cli"></a>使用 Azure CLI 管理 Azure 磁碟
 
-Azure 虛擬機器使用硬碟來儲存 VM 作業系統、應用程式和資料。 建立 VM 時，請務必選擇適合所預期工作負載的磁碟大小和組態。 本教學課程涵蓋部署和管理 VM 磁碟。 您將了解：
+Azure 虛擬機器使用硬碟來儲存虛擬機器作業系統、應用程式和資料。 建立虛擬機器時，請務必選擇適合所預期工作負載的磁碟大小和組態。 本教學課程涵蓋部署和管理 VM 磁碟。 您將了解：
 
 > [!div class="checklist"]
 > * OS 磁碟和暫存磁碟
@@ -44,9 +44,9 @@ Azure 虛擬機器使用硬碟來儲存 VM 作業系統、應用程式和資料�
 
 建立 Azure 虛擬機器後，有兩個磁碟會自動連結到虛擬機器。 
 
-**作業系統磁碟** - 作業系統磁碟可裝載 VM 作業系統，其大小可以高達 1 TB。 OS 磁碟預設會標示為 /dev/sda。 OS 磁碟的磁碟快取組態已針對 OS 效能進行最佳化。 因為此組態，OS 磁碟**不得**裝載應用程式或資料。 請對應用程式和資料使用資料磁碟，本文稍後會詳細說明。 
+**作業系統磁碟** - 作業系統磁碟可裝載虛擬機器的作業系統，其大小可以高達 1 TB。 OS 磁碟預設會標示為 /dev/sda。 OS 磁碟的磁碟快取組態已針對 OS 效能進行最佳化。 因為此組態，OS 磁碟**不得**裝載應用程式或資料。 請對應用程式和資料使用資料磁碟，本文稍後會詳細說明。 
 
-**暫存磁碟** - 暫存磁碟會使用與 VM 位於相同 Azure 主機的固態磁碟機。 暫存磁碟的效能非常好，可用於暫存資料處理等作業。 不過，如果 VM 移至新的主機，則會移除儲存在暫存磁碟上的任何資料。 暫存磁碟的大小取決於 VM 大小。 暫存磁碟會標示為 /dev/sdb，其掛接點為 /mnt。
+**暫存磁碟** - 暫存磁碟會使用與虛擬機器位於相同 Azure 主機的固態磁碟機。 暫存磁碟的效能非常好，可用於暫存資料處理等作業。 不過，如果虛擬機器移至新的主機，則會移除儲存在暫存磁碟上的任何資料。 暫存磁碟的大小取決於虛擬機器的大小。 暫存磁碟會標示為 /dev/sdb，其掛接點為 /mnt。
 
 ### <a name="temporary-disk-sizes"></a>暫存磁碟大小
 
@@ -61,9 +61,9 @@ Azure 虛擬機器使用硬碟來儲存 VM 作業系統、應用程式和資料�
 
 ## <a name="azure-data-disks"></a>Azure 資料磁碟
 
-您可以新增額外資料磁碟，以便安裝應用程式和儲存資料。 資料磁碟應使用於任何需要持久且有回應之資料儲存體的情況。 每個資料磁碟的最大容量為 1 TB。 虛擬機器的大小會決定可連結到 VM 的資料磁碟數目。 每個 VM 核心可以連結兩個資料磁碟。 
+您可以新增額外資料磁碟，以便安裝應用程式和儲存資料。 資料磁碟應使用於任何需要持久且有回應之資料儲存體的情況。 每個資料磁碟的最大容量為 1 TB。 虛擬機器的大小會決定可連結到虛擬機器的資料磁碟數目。 每個虛擬機器核心可以連結兩個資料磁碟。 
 
-### <a name="max-data-disks-per-vm"></a>每部 VM 的資料磁碟上限
+### <a name="max-data-disks-per-vm"></a>每部虛擬機器的資料磁碟上限
 
 | 類型 | VM 大小 | 每部 VM 的資料磁碟上限 |
 |----|----|----|
@@ -84,7 +84,7 @@ Azure 提供兩種類型的磁碟。
 
 ### <a name="premium-disk"></a>進階磁碟
 
-進階磁碟是以 SSD 為基礎的高效能、低延遲磁碟為後盾。 最適合用於執行生產工作負載的 VM。 進階儲存體支援 DS 系列、DSv2 系列、GS 系列和 FS 系列 VM。 進階磁碟有三種類型 (P10、P20、P30)，磁碟的大小可決定磁碟類型。 進行選取時，磁碟大小值會上調為下一個類型。 例如，如果磁碟大小少於 128 GB，則磁碟類型為 P10。 如果磁碟大小介於 129 GB 與 512 GB 之間，則大小為 P20。 任何超過 512 GB 的磁碟，其大小是 P30。
+進階磁碟是以 SSD 為基礎的高效能、低延遲磁碟為後盾。 最適合用於執行生產工作負載的虛擬機器。 進階儲存體支援 DS 系列、DSv2 系列、GS 系列和 FS 系列虛擬機器。 進階磁碟有三種類型 (P10、P20、P30)，磁碟的大小可決定磁碟類型。 進行選取時，磁碟大小值會上調為下一個類型。 例如，如果磁碟大小少於 128 GB，則磁碟類型為 P10。 如果磁碟大小介於 129 GB 與 512 GB 之間，則大小為 P20。 任何超過 512 GB 的磁碟，其大小是 P30。
 
 ### <a name="premium-disk-performance"></a>進階磁碟效能
 
@@ -94,13 +94,13 @@ Azure 提供兩種類型的磁碟。
 | 每一磁碟的 IOPS 上限 | 500 | 2,300 | 5,000 |
 每一磁碟的輸送量 | 100 MB/秒 | 150 MB/秒 | 200 MB/秒 |
 
-雖然上表指出每個磁碟的最大 IOPS，但可藉由分割多個資料磁碟來達到較高等級的效能。 例如，Standard_GS5 VM 最高可達到 80,000 IOPS。 如需每部 VM 的最大 IOPS 詳細資訊，請參閱 [Linux VM 大小](sizes.md)。
+雖然上表指出每個磁碟的最大 IOPS，但可藉由分割多個資料磁碟來達到較高等級的效能。 例如，Standard_GS5 VM 最高可達到 80,000 IOPS。 如需每部虛擬機器的最大 IOPS 詳細資訊，請參閱 [Linux VM 大小](sizes.md)。
 
 ## <a name="create-and-attach-disks"></a>建立和連結磁碟
 
-您可以建立資料磁碟並在建立 VM 時連結，或連結至現有的 VM。
+您可以建立資料磁碟並在建立虛擬機器時連結，或連結至現有的虛擬機器。
 
-### <a name="attach-disk-at-vm-creation"></a>在建立 VM 時連結磁碟
+### <a name="attach-disk-at-vm-creation"></a>在建立虛擬機器時連結磁碟
 
 使用 [az group create](https://docs.microsoft.com/cli/azure/group#az_group_create) 命令來建立資源群組。 
 
@@ -108,7 +108,7 @@ Azure 提供兩種類型的磁碟。
 az group create --name myResourceGroupDisk --location eastus
 ```
 
-使用 [az vm create]( /cli/azure/vm#create) 命令來建立 VM。 `--datadisk-sizes-gb` 引數用來指定應該建立一個額外的磁碟並連結至虛擬機器。 若要建立並連結多個磁碟，請使用以空格分隔的磁碟大小值清單。 在下列範例中，會建立具有兩個資料磁碟 (均為 128 GB) 的 VM。 因為磁碟大小是 128 GB，所以這些磁碟都會設為 P10，其可提供每個磁碟最高 500 IOPS。
+使用 [az vm create]( /cli/azure/vm#create) 命令來建立虛擬機器。 `--datadisk-sizes-gb` 引數用來指定應該建立一個額外的磁碟並連結至虛擬機器。 若要建立並連結多個磁碟，請使用以空格分隔的磁碟大小值清單。 在下列範例中，會建立具有兩個資料磁碟 (均為 128 GB) 的虛擬機器。 因為磁碟大小是 128 GB，所以這些磁碟都會設為 P10，其可提供每個磁碟最高 500 IOPS。
 
 ```azurecli-interactive 
 az vm create \
@@ -120,9 +120,9 @@ az vm create \
   --generate-ssh-keys
 ```
 
-### <a name="attach-disk-to-existing-vm"></a>將磁碟連結至現有的 VM
+### <a name="attach-disk-to-existing-vm"></a>將磁碟連結至現有的虛擬機器
 
-若要建立新的磁碟並將它連結至現有的虛擬機器，請使用 [az vm disk attach](/cli/azure/vm/disk#attach) 命令。 下列範例會建立進階磁碟 (大小為 128 GB)，並將它連結至最後一個步驟中建立的 VM。
+若要建立新的磁碟並將它連結至現有的虛擬機器，請使用 [az vm disk attach](/cli/azure/vm/disk#attach) 命令。 下列範例會建立進階磁碟 (大小為 128 GB)，並將它連結至最後一個步驟中建立的虛擬機器。
 
 ```azurecli-interactive 
 az vm disk attach --vm-name myVM --resource-group myResourceGroupDisk --disk myDataDisk --size-gb 128 --sku Premium_LRS --new 
@@ -197,9 +197,9 @@ UUID=33333333-3b3b-3c3c-3d3d-3e3e3e3e3e3e   /datadrive  ext4    defaults,nofail,
 exit
 ```
 
-## <a name="resize-vm-disk"></a>調整 VM 磁碟的大小
+## <a name="resize-vm-disk"></a>調整虛擬機器磁碟的大小
 
-部署 VM 後，作業系統磁碟或任何連結的資料磁碟可以增加大小。 需要更多儲存空間或更高層級的效能 (P10、P20、P30) 時，增加磁碟的大小很有幫助。 請注意，磁碟的大小不能減少。
+部署虛擬機器後，作業系統磁碟或任何連結的資料磁碟可以增加大小。 需要更多儲存空間或更高層級的效能 (P10、P20、P30) 時，增加磁碟的大小很有幫助。 請注意，磁碟的大小不能減少。
 
 增加磁碟大小之前，需要有磁碟的識別碼或名稱。 使用 [az disk list](/cli/azure/disk#az_disk_list) 命令來傳回資源群組中的所有磁碟。 記下您想要調整大小的磁碟名稱。
 
@@ -207,7 +207,7 @@ exit
 az disk list -g myResourceGroupDisk --query '[*].{Name:name,Gb:diskSizeGb,Tier:accountType}' --output table
 ```
 
-此外，也必須將 VM 解除配置。 使用 [az vm deallocate]( /cli/azure/vm#deallocate) 命令來停止並解除配置 VM。
+此外，也必須將虛擬機器解除配置。 使用 [az vm deallocate]( /cli/azure/vm#deallocate) 命令來停止並解除配置虛擬機器。
 
 ```azurecli-interactive 
 az vm deallocate --resource-group myResourceGroupDisk --name myVM
@@ -219,13 +219,13 @@ az vm deallocate --resource-group myResourceGroupDisk --name myVM
 az disk update --name myDataDisk --resource-group myResourceGroupDisk --size-gb 1023
 ```
 
-調整大小作業完成後，請啟動 VM。
+調整大小作業完成後，請啟動虛擬機器。
 
 ```azurecli-interactive 
 az vm start --resource-group myResourceGroupDisk --name myVM
 ```
 
-如果您已調整作業系統磁碟的大小，則會自動擴充資料分割。 如果您已調整資料磁碟的大小，則必須在 VM 作業系統中擴充所有目前的資料分割。
+如果您已調整作業系統磁碟的大小，則會自動擴充資料分割。 如果您已調整資料磁碟的大小，則必須在虛擬機器作業系統中擴充所有目前的資料分割。
 
 ## <a name="snapshot-azure-disks"></a>建立 Azure 磁碟快照集
 
@@ -285,7 +285,7 @@ az vm disk attach –g myResourceGroupDisk –-vm-name myVM –-disk $datadisk
 
 ## <a name="next-steps"></a>後續步驟
 
-在本教學課程中，您已了解 VM 磁碟的相關主題，像是：
+在本教學課程中，您已了解虛擬機器磁碟的相關主題，像是：
 
 > [!div class="checklist"]
 > * OS 磁碟和暫存磁碟

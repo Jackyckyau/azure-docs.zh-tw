@@ -24,14 +24,14 @@ ms.lasthandoff: 10/11/2017
 ---
 # <a name="create-and-manage-linux-vms-with-the-azure-cli"></a>使用 Azure CLI 來建立和管理 Linux VM
 
-Azure 虛擬機器提供完全可設定且彈性的計算環境。 本教學課程涵蓋基本的「Azure 虛擬機器」部署項目，例如選取 VM 大小、選取 VM 映像、部署 VM。 您會了解如何：
+Azure 虛擬機器提供完全可設定且具有彈性操作的計算環境。 本教學課程涵蓋基本的「Azure 虛擬機器」部署項目，例如選取虛擬機器大小、選取映像、部署虛擬機器。 您會了解如何：
 
 > [!div class="checklist"]
-> * 建立及連線到 VM
-> * 選取及使用 VM 映像
-> * 檢視及使用特定 VM 大小
-> * 調整 VM 的大小
-> * 檢視及了解 VM 狀態
+> * 建立及連線到虛擬機器
+> * 選取及使用虛擬機器映像
+> * 檢視及使用特定虛擬機器大小
+> * 調整虛擬機器的大小
+> * 檢視及了解虛擬機器狀態
 
 
 [!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
@@ -48,7 +48,7 @@ Azure 資源群組是在其中部署與管理 Azure 資源的邏輯容器。 資
 az group create --name myResourceGroupVM --location eastus
 ```
 
-在建立或修改 VM 時，會指定資源群組，在本教學課程的整個過程中可以看到此操作。
+在建立或修改虛擬機器時，會指定資源群組，在本教學課程的整個過程中可以看到此操作。
 
 ## <a name="create-virtual-machine"></a>Create virtual machine
 
@@ -60,7 +60,7 @@ az group create --name myResourceGroupVM --location eastus
 az vm create --resource-group myResourceGroupVM --name myVM --image UbuntuLTS --generate-ssh-keys
 ```
 
-系統可能需要幾分鐘的時間來建立 VM。 建立 VM 之後，Azure CLI 就會輸出 VM 的相關資訊。 請記下 `publicIpAddress`，此位址可用來存取虛擬機器。 
+系統可能需要幾分鐘的時間來建立虛擬機器。 建立虛擬機器之後，Azure CLI 就會輸出相關資訊。 請記下 `publicIpAddress`，此位址可用來存取虛擬機器。 
 
 ```azurecli-interactive 
 {
@@ -77,13 +77,13 @@ az vm create --resource-group myResourceGroupVM --name myVM --image UbuntuLTS --
 
 ## <a name="connect-to-vm"></a>連接到 VM
 
-您現在可以在 Azure Cloud Shell 中使用 SSH 連線到 VM，也可以從本機電腦與 VM 連線。 請使用先前步驟中記下的 `publicIpAddress` 來取代範例 IP 位址。
+您現在可以在 Azure Cloud Shell 中使用 SSH 連線到虛擬機器，也可以從本機電腦與虛擬機器連線。 請使用先前步驟中記下的 `publicIpAddress` 來取代範例 IP 位址。
 
 ```bash
 ssh 52.174.34.95
 ```
 
-在登入 VM 後，您就可以安裝和設定應用程式。 完成時，請像平常一樣地關閉 SSH 工作階段：
+在登入虛擬機器後，您就可以安裝和設定應用程式。 完成時，請像平常一樣地關閉 SSH 工作階段：
 
 ```bash
 exit
@@ -91,7 +91,7 @@ exit
 
 ## <a name="understand-vm-images"></a>了解 VM 映像
 
-Azure Marketplace 包含許多可用來建立 VM 的映像。 在先前的步驟中，是使用 Ubuntu 映像來建立虛擬機器。 在此步驟中，則是使用 Azure CLI 來搜尋 Marketplace 中的 CentOS 映像，然後使用此映像來部署第二部虛擬機器。  
+Azure Marketplace 包含許多可用來建立映像。 在先前的步驟中，是使用 Ubuntu 映像來建立虛擬機器。 在此步驟中，則是使用 Azure CLI 來搜尋 Marketplace 中的 CentOS 映像，然後使用此映像來部署第二部虛擬機器。  
 
 若要查看最常用的映像清單，請使用 [az vm image list](/cli/azure/vm/image#list) 命令。
 
@@ -99,7 +99,7 @@ Azure Marketplace 包含許多可用來建立 VM 的映像。 在先前的步驟
 az vm image list --output table
 ```
 
-此命令輸出會傳回 Azure 上最常用的 VM 映像。
+此命令輸出會傳回 Azure 上最常用的虛擬機器映像。
 
 ```bash
 Offer          Publisher               Sku                 Urn                                                             UrnAlias             Version
@@ -136,13 +136,13 @@ CentOS            OpenLogic         6.5   OpenLogic:CentOS:6.5:6.5.20160309     
 CentOS            OpenLogic         6.5   OpenLogic:CentOS:6.5:6.5.20170207       6.5.20170207
 ```
 
-若要使用特定的映像來部署 VM，請記下 Urn 資料行中的值。 指定映像時，可以使用 “latest” 來取代映像版本號碼，這會選取最新的散發版本。 在此範例中，是使用 `--image` 引數來指定最新版的 CentOS 6.5 映像。  
+若要使用特定的映像來部署虛擬機器，請記下 Urn 資料行中的值。 指定映像時，可以使用 “latest” 來取代映像版本號碼，這會選取最新的散發版本。 在此範例中，是使用 `--image` 引數來指定最新版的 CentOS 6.5 映像。  
 
 ```azurecli-interactive 
 az vm create --resource-group myResourceGroupVM --name myVM2 --image OpenLogic:CentOS:6.5:latest --generate-ssh-keys
 ```
 
-## <a name="understand-vm-sizes"></a>了解 VM 大小
+## <a name="understand-vm-sizes"></a>了解虛擬機器大小
 
 虛擬機器大小會決定可供虛擬機器使用的計算資源 (例如 CPU、GPU 和記憶體) 數量。 您必須針對預期的工作負載，來適當設定虛擬機器的大小。 如果工作負載增加，可以調整現有虛擬機器的大小。
 
@@ -160,9 +160,9 @@ az vm create --resource-group myResourceGroupVM --name myVM2 --image OpenLogic:C
 | [高效能](sizes-hpc.md) | H、A8-11          | 我們的最強大 CPU VM，可搭配選用的高輸送量網路介面 (RDMA)。 
 
 
-### <a name="find-available-vm-sizes"></a>尋找可用的 VM 大小
+### <a name="find-available-vm-sizes"></a>尋找可用的虛擬機器大小
 
-若要查看特定區域中可用的 VM 大小清單，請使用 [az vm list-sizes](/cli/azure/vm#list-sizes) 命令。 
+若要查看特定區域中可用的虛擬機器空間大小清單，請使用 [az vm list-sizes](/cli/azure/vm#list-sizes) 命令。 
 
 ```azurecli-interactive 
 az vm list-sizes --location eastus --output table
@@ -191,39 +191,39 @@ az vm list-sizes --location eastus --output table
                 16         57344  Standard_A7                           8           1047552                  619520
 ```
 
-### <a name="create-vm-with-specific-size"></a>建立特定大小的 VM
+### <a name="create-vm-with-specific-size"></a>建立特定空間大小的虛擬機器
 
-在先前的 VM 建立範例中，並未提供大小，因此是採用預設大小。 您可以在建立 VM 時，使用 [az vm create](/cli/azure/vm#create) 和 `--size` 引數來選取 VM 大小。 
+在先前的虛擬機器建立範例中，並未提供虛擬機器的空間大小，因此是採用預設的設定各虛擬機器的空間大小。 您可以在建立虛擬機器時，使用 [az vm create](/cli/azure/vm#create) 和 `--size` 引數來選取虛擬機器的大小。 
 
 ```azurecli-interactive 
 az vm create \
     --resource-group myResourceGroupVM \
-    --name myVM3 \
-    --image UbuntuLTS \
+    --name myVM3 \
+    --image UbuntuLTS \
     --size Standard_F4s \
     --generate-ssh-keys
 ```
 
-### <a name="resize-a-vm"></a>調整 VM 的大小
+### <a name="resize-a-vm"></a>調整虛擬機器空間
 
-在部署 VM 之後，可以調整其大小以增加或減少資源配置。 您可以使用 [az vm show](/cli/azure/vm#show) 檢視 VM 目前的大小：
+在部署虛擬機器之後，可以調整其大小以增加或減少資源配置。 您可以使用 [az vm show](/cli/azure/vm#show) 檢視虛擬機器目前的空間狀況：
 
 ```azurecli-interactive
 az vm show --resource-group myResourceGroupVM --name myVM --query hardwareProfile.vmSize
 ```
 
-在調整 VM 大小之前，請先檢查目前的 Azure 叢集上是否有所需的大小可用。 [az vm list-vm-resize-options](/cli/azure/vm#list-vm-resize-options) 命令會傳回大小清單。 
+在調整虛擬機器空間之前，請先檢查目前的 Azure 叢集上是否有所需的大小可用。 [az vm list-vm-resize-options](/cli/azure/vm#list-vm-resize-options) 命令會傳回大小清單。 
 
 ```azurecli-interactive 
 az vm list-vm-resize-options --resource-group myResourceGroupVM --name myVM --query [].name
 ```
-如果有所需的大小可用，即可從已開機狀態調整 VM 的大小，但是會在作業期間重新開機。 請使用 [az vm resize]( /cli/azure/vm#resize) 命令來執行調整大小作業。
+如果有所需的大小可用，即可從已開機狀態調整虛擬機器的空間，但是會在作業期間重新開機。 請使用 [az vm resize]( /cli/azure/vm#resize) 命令來執行調整大小作業。
 
 ```azurecli-interactive 
 az vm resize --resource-group myResourceGroupVM --name myVM --size Standard_DS4_v2
 ```
 
-如果目前的叢集上沒有所需的大小，則必須先將 VM 解除配置，才能進行調整大小作業。 請使用 [az vm deallocate]( /cli/azure/vm#deallocate) 命令將 VM 停止並解除配置。 請注意，重新開啟 VM 電源之後，可能會移除暫存磁碟上的任何資料。 公用 IP 位址也會變更，除非使用的是靜態 IP 位址。 
+如果目前的叢集上沒有所需的空間，則必須先將虛擬機器解除配置，才能進行調整大小作業。 請使用 [az vm deallocate]( /cli/azure/vm#deallocate) 命令將虛擬機器停止並解除配置。 請注意，重新開啟虛擬機器電源之後，可能會移除暫存磁碟上的任何資料。 公用 IP 位址也會變更，除非使用的是靜態 IP 位址。 
 
 ```azurecli-interactive 
 az vm deallocate --resource-group myResourceGroupVM --name myVM
@@ -235,15 +235,15 @@ az vm deallocate --resource-group myResourceGroupVM --name myVM
 az vm resize --resource-group myResourceGroupVM --name myVM --size Standard_GS1
 ```
 
-調整大小之後，即可重新啟動 VM。
+調整大小之後，即可重新啟動虛擬機器。
 
 ```azurecli-interactive 
 az vm start --resource-group myResourceGroupVM --name myVM
 ```
 
-## <a name="vm-power-states"></a>VM 電源狀態
+## <a name="vm-power-states"></a>虛擬機器的電源狀態
 
-Azure VM 的電源狀態可以是許多電源狀態的其中一種。 這個狀態代表從 Hypervisor 的觀點來看，VM 的目前狀態。 
+Azure VM 可以有不同的電源狀態。 這個狀態代表從 Hypervisor 的觀點來看，虛擬機器的目前狀態。 
 
 ### <a name="power-states"></a>電源狀態
 
@@ -259,7 +259,7 @@ Azure VM 的電源狀態可以是許多電源狀態的其中一種。 這個狀�
 
 ### <a name="find-power-state"></a>尋找電源狀態
 
-若要擷取特定 VM 的狀態，請使用 [az vm get instance-view](/cli/azure/vm#get-instance-view) 命令。 請務必為虛擬機器和資源群組指定有效的名稱。 
+若要擷取特定虛擬機器的狀態，請使用 [az vm get instance-view](/cli/azure/vm#get-instance-view) 命令。 請務必為虛擬機器和資源群組指定有效的名稱。 
 
 ```azurecli-interactive 
 az vm get-instance-view \
@@ -278,7 +278,7 @@ PowerState/running  VM running       Info
 
 ## <a name="management-tasks"></a>管理工作
 
-在虛擬機器的生命週期內，您可以執行一些管理工作，例如啟動、停止或刪除虛擬機器。 此外，您可以建立指令碼來自動執行重複或複雜的工作。 使用 Azure CLI，可以從命令列或在指令碼中執行許多常見的管理工作。 
+在已經建立好的虛擬機器後，您可以執行一些管理工作，例如啟動、停止或刪除虛擬機器。 此外，您可以建立指令碼來自動執行重複或複雜的工作。 使用 Azure CLI，可以從命令列或在指令碼中執行許多常見的管理工作。 
 
 ### <a name="get-ip-address"></a>取得 IP 位址
 
@@ -302,7 +302,7 @@ az vm start --resource-group myResourceGroupVM --name myVM
 
 ### <a name="delete-resource-group"></a>刪除資源群組
 
-刪除資源群組會同時刪除其內含的所有資源，例如 VM、虛擬網路和磁碟。 `--no-wait` 參數不會等待作業完成，就會將控制項傳回給提示字元。 `--yes` 參數會確認您想要刪除資源，而不另外對您提示將要進行此作業。
+刪除資源群組會同時刪除其內含的所有資源，例如虛擬機器、虛擬網路和磁碟。 `--no-wait` 參數不會等待作業完成，就會將控制項傳回給提示字元。 `--yes` 參數會確認您想要刪除資源，而不另外對您提示將要進行此作業。
 
 ```azurecli-interactive 
 az group delete --name myResourceGroupVM --no-wait --yes
@@ -310,16 +310,16 @@ az group delete --name myResourceGroupVM --no-wait --yes
 
 ## <a name="next-steps"></a>後續步驟
 
-在本教學課程中，您已了解基本的 VM 建立和管理，像是如何：
+在本教學課程中，您已了解基本的虛擬機器建立和管理，包括如何：
 
 > [!div class="checklist"]
-> * 建立及連線到 VM
-> * 選取及使用 VM 映像
-> * 檢視及使用特定 VM 大小
-> * 調整 VM 的大小
-> * 檢視及了解 VM 狀態
+> * 建立及連線到虛擬機器
+> * 選取及使用虛擬機器映像
+> * 檢視及使用特定虛擬機器的大小
+> * 調整虛擬機器的大小
+> * 檢視及了解虛擬機器的狀態
 
-請前進到下一個教學課程，以了解 VM 磁碟。  
+請前進到下一個教學課程，以了解虛擬機器磁碟管理。 
 
 > [!div class="nextstepaction"]
-> [建立和管理 VM 磁碟](./tutorial-manage-disks.md)
+> [建立和管理虛擬機器磁碟](./tutorial-manage-disks.md)
